@@ -4,10 +4,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskDate = document.getElementById('task-date');
     const taskNotes = document.getElementById('task-notes');
     const taskPriority = document.getElementById('task-priority');
+    const taskAlert = document.getElementById('task-alert');
     const taskList = document.getElementById('task-list');
     const nameForm = document.getElementById('name-form');
     const userNameInput = document.getElementById('user-name');
     const todoTitle = document.getElementById('user-todo-title');
+
+    // Calendar initialization
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        editable: true,
+        selectable: true,
+        events: []
+    });
+    calendar.render();
 
     // Display user name on the To-Do List
     nameForm.addEventListener('submit', (e) => {
@@ -29,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (taskText === '') return;
 
-        // Create a new list item (task)
+        // Add task to the list
         const newTask = document.createElement('li');
         const taskContent = document.createElement('div');
         taskContent.classList.add('task-content');
@@ -56,6 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteButton.textContent = 'Delete';
         deleteButton.addEventListener('click', () => {
             taskList.removeChild(newTask);
+            // Remove from calendar
+            const event = calendar.getEventById(taskText);
+            if (event) event.remove();
         });
 
         taskActions.appendChild(editButton);
@@ -71,5 +85,19 @@ document.addEventListener('DOMContentLoaded', () => {
         taskDate.value = '';
         taskNotes.value = '';
         taskPriority.value = 'medium';
+
+        // Add task to calendar
+        calendar.addEvent({
+            id: taskText,
+            title: taskText,
+            start: taskDueDate
+        });
+
+        // Optional Alert for Reminder
+        if (taskAlert.checked) {
+            setTimeout(() => {
+                alert(`Reminder: ${taskText} is due today!`);
+            }, new Date(taskDueDate).getTime() - Date.now());
+        }
     });
 });
