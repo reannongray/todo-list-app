@@ -4,17 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>My To-Do List</h1>
-        <form id="task-form">
-            <input type="text" id="task-input" placeholder="Add a new task..." aria-label="New Task">
-            <button type="submit" aria-label="Add Task">Add Task</button>
-        </form>
-        <ul id="task-list"></ul>
-    </div>
+    <!-- Name Input Form -->
+    <form id="name-form">
+        <label for="user-name">Enter your name:</label>
+        <input type="text" id="user-name" placeholder="Your name" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Personalized To-Do List Title -->
+    <h2 id="user-todo-title">Your To-Do List</h2>
+
+    <!-- To-Do Task Form -->
+    <form id="task-form">
+        <input type="text" id="task-input" placeholder="Task description (e.g., Buy groceries 🛒)" required>
+        <input type="date" id="task-date" required>
+        <textarea id="task-notes" placeholder="Additional notes"></textarea>
+        <select id="task-priority">
+            <option value="high">High Priority</option>
+            <option value="medium">Medium Priority</option>
+            <option value="low">Low Priority</option>
+        </select>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <!-- To-Do List Display -->
+    <ul id="task-list"></ul>
+
+    <!-- JavaScript Link -->
     <script src="script.js"></script>
 </body>
 </html>
